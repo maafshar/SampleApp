@@ -25,8 +25,8 @@ namespace SampleApp.Pages
             var a = Program._sa;
             var _hostedServices = Program._hostedServicesA;
 
-           
 
+            Response.Headers.Add("Refresh", "2");
 
             var receivedReqId=Request.Cookies["ReqId"];
             if (receivedReqId == null)
@@ -37,7 +37,7 @@ namespace SampleApp.Pages
                 var result= sa.Do(reqID);
                 if (result.Key == false)
                 {
-                    Response.Cookies.Append("ReqId", reqID);
+                    Response.Cookies.Append("ReqId", reqID);                   
                     resultToPrint = "please wait to praper data  ... ";
                 }
                 else
@@ -53,6 +53,7 @@ namespace SampleApp.Pages
                 if (result.Key != false) 
                 {
                     Response.Cookies.Delete("ReqId");
+                    Response.Headers.Remove("Refresh");
                     resultToPrint = result.Value.ToString();
                 }
                 else
